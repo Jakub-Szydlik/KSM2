@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalendarz - KSM Archidiecezja Warmińska</title>
+    <style>
+        html { scroll-behavior: smooth; }
+        body, html { margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; background: #121212; color: #e0e0e0; overflow-x: hidden; }
+
+        /* HEADER - Spójny z index.html */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            border-bottom: 0.06rem solid rgba(212, 175, 55, 0.2);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            width: 95%;
+            max-width: 100rem;
+            margin: 0 auto;
+            min-height: 6rem;
+        }
+
+        .logo-item { flex: 1; display: flex; align-items: center; }
+        .logo-item img { width: clamp(10rem, 20vw, 25rem); height: auto; max-height: 8rem; }
+
+        .menu-links { display: flex; gap: clamp(1rem, 2vw, 2rem); align-items: center; list-style: none; }
+        nav a { text-decoration: none; color: #ffffff; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; transition: 0.3s; }
+        nav a:hover { color: #D4AF37; }
+        .btn-support { background: #b8860b !important; padding: 0.8rem 1.5rem !important; border-radius: 0.25rem; color: white !important; }
+
+        /* KALENDARZ - STYLIZACJA */
+        .main-content { margin-top: 10rem; padding: 0 5% 5vh; max-width: 90rem; margin-left: auto; margin-right: auto; }
+        
+        .calendar-wrapper { background: #1e1e1e; border-radius: 1rem; border: 1px solid #333; overflow: hidden; }
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; padding: 2rem; background: #252525; }
+        
+        .month-btn { background: none; border: 1px solid #D4AF37; color: #D4AF37; padding: 0.6rem 1.2rem; cursor: pointer; border-radius: 4px; font-weight: bold; transition: 0.3s; }
+        .month-btn:hover { background: #D4AF37; color: #000; }
+
+        #calendarGrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: #333; }
+        .day-header { background: #252525; padding: 1rem; text-align: center; color: #D4AF37; font-weight: bold; }
+        .day-cell { background: #1e1e1e; min-height: 120px; padding: 10px; border: 0.5px solid #252525; }
+        
+        .event-tag { background: #b8860b; color: white; font-size: 0.75rem; padding: 3px 6px; border-radius: 3px; margin-top: 5px; }
+
+        footer { text-align: center; padding: 3rem; color: #777; font-size: 0.8rem; border-top: 0.06rem solid #222; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="nav-container">
+        <nav style="width: 100%;">
+            <ul style="display: flex; align-items: center; margin: 0; padding: 0;">
+                <li class="logo-item">
+                    <a href="index.html"><img src="KSM_Warmia_logo.png" alt="KSM"></a>
+                </li>
+                <div class="menu-links">
+                    <li><a href="index.html">Aktualności</a></li>
+                    <li><a href="kalendarz.html" style="color: #D4AF37;">Kalendarz</a></li>
+                    <li><a href="o-nas.html">O nas</a></li>
+                    <li><a href="#">Kontakt</a></li>
+                    <li><a href="#" class="btn-support">Wesprzyj</a></li>
+                </div>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="main-content">
+    <h1 style="text-align: center; color: #D4AF37; margin-bottom: 2rem;">Kalendarz Wydarzeń</h1>
+    
+    <div class="calendar-wrapper">
+        <div class="calendar-header">
+            <button class="month-btn" onclick="changeMonth(-1)"> Poprzedni</button>
+            <h2 id="monthTitle" style="margin: 0;">Maj 2026</h2>
+            <button class="month-btn" onclick="changeMonth(1)">Następny </button>
+        </div>
+        <div id="calendarGrid">
+            <div class="day-header">Pn</div><div class="day-header">Wt</div><div class="day-header">Śr</div>
+            <div class="day-header">Czw</div><div class="day-header">Pt</div><div class="day-header">Sb</div><div class="day-header">Nd</div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    &copy; 2026 Katolickie Stowarzyszenie Młodzieży Archidiecezji Warmińskiej
+</footer>
+
+<script>
+    const events = {
+        "2026-05-15": "Szkolenie Liderów",
+        "2026-05-24": "Zjazd Diecezjalny",
+        "2026-06-10": "Wakacje z KSM"
+    };
+
+    let currentNavDate = new Date();
+
+    function drawCalendar() {
+        const grid = document.getElementById('calendarGrid');
+        const title = document.getElementById('monthTitle');
+        
+        // Czyścimy dni, zostawiamy nagłówki
+        const headers = grid.querySelectorAll('.day-header');
+        grid.innerHTML = '';
+        headers.forEach(h => grid.appendChild(h));
+
+        const year = currentNavDate.getFullYear();
+        const month = currentNavDate.getMonth();
+        
+        const monthNames = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"];
+        title.innerText = `${monthNames[month]} ${year}`;
+
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        let startOffset = firstDay === 0 ? 6 : firstDay - 1;
+
+        for (let i = 0; i < startOffset; i++) {
+            const empty = document.createElement('div');
+            empty.className = 'day-cell';
+            grid.appendChild(empty);
+        }
+
+        for (let day = 1; day <= daysInMonth; day++) {
+            const cell = document.createElement('div');
+            cell.className = 'day-cell';
+            cell.innerHTML = `<strong>${day}</strong>`;
+            
+            const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            if (events[dateKey]) {
+                const ev = document.createElement('div');
+                ev.className = 'event-tag';
+                ev.innerText = events[dateKey];
+                cell.appendChild(ev);
+            }
+            grid.appendChild(cell);
+        }
+    }
+
+    function changeMonth(dir) {
+        currentNavDate.setMonth(currentNavDate.getMonth() + dir);
+        drawCalendar();
+    }
+
+    drawCalendar();
+</script>
+
+</body>
+</html>
