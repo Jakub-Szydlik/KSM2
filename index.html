@@ -5,60 +5,112 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KSM Archidiecezja Warmińska</title>
     <style>
-        /* BAZA I PŁYNNE PRZEWIJANIE */
+        /* BAZA */
         html { scroll-behavior: smooth; }
-        body, html { margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; background: #f4f4f4; color: #333; }
+        body, html { margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; background: #121212; color: #e0e0e0; }
 
-        /* PASEK NAWIGACJI (Z POPRZEDNIEJ WERSJI) */
+        /* PASEK NAWIGACJI - PRZEZROCZYSTY NA SLIDERZE */
         header {
-            position: fixed; top: 0; width: 100%; background: white;
+            position: absolute; /* Nakłada menu na slider */
+            top: 0; width: 100%; 
+            background: transparent;
             display: flex; justify-content: center; align-items: center;
-            padding: 10px 20px; box-sizing: border-box; z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px; box-sizing: border-box; z-index: 1000;
+            transition: background 0.3s ease;
         }
-        .nav-container { display: flex; align-items: center; width: 100%; max-width: 1200px; justify-content: space-between; }
-        .logo img { height: 50px; }
-        nav ul { list-style: none; display: flex; gap: 20px; margin: 0; padding: 0; align-items: center; }
-        nav a { text-decoration: none; color: #3498db; font-weight: bold; font-size: 0.9rem; }
         
-        .btn-support { background-color: #55acee; color: white !important; padding: 8px 15px; border-radius: 5px; text-transform: uppercase; }
+        /* Efekt po przewinięciu (opcjonalnie można dodać skryptem, tu na stałe dla czytelności na ciemnym tle) */
+        .nav-container { display: flex; align-items: center; width: 100%; max-width: 1200px; justify-content: space-between; }
+        
+        .logo img { 
+            height: 60px; 
+            filter: brightness(0) invert(1); /* Zmienia czarne logo na białe */
+        }
+
+        nav ul { list-style: none; display: flex; gap: 30px; margin: 0; padding: 0; align-items: center; }
+        nav a { 
+            text-decoration: none; 
+            color: #ffffff; 
+            font-weight: 600; 
+            font-size: 0.95rem; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+        nav a:hover { color: #b8860b; border-bottom: 2px solid #b8860b; }
+        
+        /* PRZYCISK WESPRZYJ - ZŁOTY MOTYW */
+        .btn-support { 
+            background: linear-gradient(45deg, #b8860b, #8b6508) !important; 
+            color: white !important; 
+            padding: 10px 20px !important; 
+            border-radius: 3px; 
+            border: none !important;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .btn-support:hover { transform: scale(1.05); border: none; }
 
         /* SLIDER */
-        .ksm-slider { position: relative; width: 100%; height: 80vh; overflow: hidden; background: #000; }
-        .ksm-slide { display: none; position: absolute; width: 100%; height: 100%; animation: fadeAnim 1s; }
-        .ksm-slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(45%); }
-        .ksm-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; }
-        .ksm-word { font-size: 4rem; font-weight: 900; letter-spacing: 8px; margin: 0; }
+        .ksm-slider { position: relative; width: 100%; height: 100vh; overflow: hidden; background: #000; }
+        .ksm-slide { display: none; position: absolute; width: 100%; height: 100%; animation: fadeAnim 1.5s; }
+        .ksm-slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(40%); }
+        
+        .ksm-overlay { 
+            position: absolute; top: 55%; left: 50%; transform: translate(-50%, -50%); 
+            text-align: center; color: white; width: 100%;
+        }
+        .ksm-word { 
+            font-size: 5rem; font-weight: 900; letter-spacing: 15px; margin: 0; 
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+            border-top: 2px solid rgba(255,255,255,0.3);
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            display: inline-block;
+            padding: 10px 40px;
+        }
         @keyframes fadeAnim { from { opacity: 0; } to { opacity: 1; } }
 
-        /* SEKCOJA AKTUALNOŚCI */
-        .news-section { max-width: 1200px; margin: 50px auto; padding: 0 20px; }
-        .news-section h2 { text-align: center; color: #2c3e50; text-transform: uppercase; margin-bottom: 40px; }
+        /* SEKCOJA AKTUALNOŚCI - CIEMNA */
+        .news-section { max-width: 1200px; margin: 80px auto; padding: 0 20px; }
+        .news-section h2 { 
+            text-align: center; color: #b8860b; text-transform: uppercase; 
+            margin-bottom: 50px; font-size: 2.5rem; letter-spacing: 3px;
+        }
+        .news-section h2::after {
+            content: ''; display: block; width: 60px; height: 3px; background: #fff; margin: 10px auto;
+        }
         
         .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         
-        .news-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; }
-        .news-card:hover { transform: translateY(-10px); }
-        .news-card img { width: 100%; height: 200px; object-fit: cover; }
-        .news-content { padding: 20px; }
-        .news-content h3 { margin: 0 0 10px 0; color: #3498db; }
-        .news-content p { font-size: 0.9rem; color: #666; line-height: 1.6; }
+        .news-card { 
+            background: #1e1e1e; border-radius: 5px; overflow: hidden; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: 0.3s;
+            border: 1px solid #333;
+        }
+        .news-card:hover { transform: translateY(-10px); border-color: #b8860b; }
+        .news-card img { width: 100%; height: 220px; object-fit: cover; filter: grayscale(30%); transition: 0.5s; }
+        .news-card:hover img { filter: grayscale(0%); }
+        
+        .news-content { padding: 25px; }
+        .news-content h3 { margin: 0 0 15px 0; color: #b8860b; font-size: 1.3rem; }
+        .news-content p { font-size: 0.95rem; color: #bbb; line-height: 1.7; }
 
         /* STOPKA */
-        footer { background: #2c3e50; color: white; padding: 60px 20px 20px; margin-top: 50px; }
+        footer { background: #0a0a0a; color: white; padding: 80px 20px 30px; border-top: 3px solid #b8860b; }
         .footer-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
-        .footer-col h4 { border-bottom: 2px solid #3498db; display: inline-block; margin-bottom: 20px; padding-bottom: 5px; }
-        .footer-col p, .footer-col ul { font-size: 0.85rem; color: #bdc3c7; line-height: 1.8; }
+        .footer-col h4 { color: #b8860b; text-transform: uppercase; margin-bottom: 25px; letter-spacing: 1px; }
+        .footer-col p, .footer-col ul { font-size: 0.9rem; color: #999; line-height: 2; }
         .footer-col ul { list-style: none; padding: 0; }
-        .footer-col ul li a { color: #bdc3c7; text-decoration: none; transition: 0.3s; }
-        .footer-col ul li a:hover { color: white; padding-left: 5px; }
+        .footer-col ul li a { color: #999; text-decoration: none; transition: 0.3s; }
+        .footer-col ul li a:hover { color: #fff; padding-left: 8px; }
         
-        .footer-bottom { text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #3e4f5f; font-size: 0.8rem; color: #7f8c8d; }
+        .footer-bottom { text-align: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid #222; font-size: 0.8rem; color: #555; }
 
         /* MOBILE */
         @media (max-width: 768px) {
-            nav ul { display: none; } /* Tutaj docelowo przydałby się burger menu */
-            .ksm-word { font-size: 2.5rem; }
+            header { background: rgba(0,0,0,0.8); }
+            nav ul { display: none; }
+            .ksm-word { font-size: 2.2rem; letter-spacing: 5px; }
         }
     </style>
 </head>
@@ -90,62 +142,57 @@
         </div>
     </div>
 
-    <!-- SEKCJA AKTUALNOŚCI -->
     <section class="news-section" id="aktualnosci">
         <h2>Aktualności</h2>
         <div class="news-grid">
-            <!-- Artykuł 1 -->
             <div class="news-card">
                 <img src="https://ksmarchwarmia.wordpress.com/wp-content/uploads/2026/05/321.jpg" alt="Zjazd">
                 <div class="news-content">
                     <h3>Walny Zjazd KSM</h3>
-                    <p>Już w najbliższą sobotę odbędzie się zjazd przedstawicieli oddziałów z całej diecezji. Zapraszamy do wspólnej modlitwy i obrad.</p>
+                    <p>Zapraszamy przedstawicieli oddziałów na wspólne obradowanie i modlitwę w sercu naszej diecezji.</p>
                 </div>
             </div>
-            <!-- Artykuł 2 -->
             <div class="news-card">
                 <img src="https://ksmarchwarmia.wordpress.com/wp-content/uploads/2026/05/5212.jpg" alt="Szkolenie">
                 <div class="news-content">
                     <h3>Szkolenie Liderów</h3>
-                    <p>Za nami intensywny weekend formacyjny. Nasi nowi liderzy są gotowi do podejmowania wyzwań w swoich parafiach!</p>
+                    <p>Nowe pokolenie liderów gotowe do działania! Sprawdź fotorelację z ostatniego weekendu formacyjnego.</p>
                 </div>
             </div>
-            <!-- Artykuł 3 -->
             <div class="news-card">
                 <img src="https://ksmarchwarmia.wordpress.com/wp-content/uploads/2026/05/12345.jpg" alt="Akcja">
                 <div class="news-content">
                     <h3>Akcja "Gotów"</h3>
-                    <p>Ruszyły zapisy na coroczną akcję ewangelizacyjną. Sprawdź jak możesz się zaangażować w pomoc potrzebującym.</p>
+                    <p>Bądź gotowy nieść pomoc. Ruszyły zapisy na coroczną akcję wspierającą lokalną społeczność.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- STOPKA -->
     <footer>
         <div class="footer-container">
             <div class="footer-col">
-                <h4>O nas</h4>
-                <p>Katolickie Stowarzyszenie Młodzieży Archidiecezji Warmińskiej to wspólnota młodych ludzi chcących żyć wartościami chrześcijańskimi w codzienności.</p>
+                <h4>O wspólnocie</h4>
+                <p>KSM Archidiecezja Warmińska to miejsce dla każdego młodego człowieka, który szuka czegoś więcej niż tylko powierzchowności.</p>
             </div>
             <div class="footer-col">
-                <h4>Szybkie linki</h4>
+                <h4>Nawigacja</h4>
                 <ul>
-                    <li><a href="#">Statut KSM</a></li>
+                    <li><a href="#">Statut i dokumenty</a></li>
                     <li><a href="#">Zostań członkiem</a></li>
-                    <li><a href="#">Galeria zdjęć</a></li>
-                    <li><a href="#">Dokumenty do pobrania</a></li>
+                    <li><a href="#">Nasze Oddziały</a></li>
+                    <li><a href="#">Logotypy</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h4>Kontakt</h4>
-                <p>ul. Prosta 1, 10-001 Olsztyn<br>
+                <p>ul. Prosta 1, Olsztyn<br>
                 Email: kontakt@ksmwarmia.pl<br>
                 Tel: +48 123 456 789</p>
             </div>
         </div>
         <div class="footer-bottom">
-            &copy; 2026 KSM Archidiecezja Warmińska. Wszystkie prawa zastrzeżone.
+            &copy; 2026 KSM Archidiecezja Warmińska. Gotów!
         </div>
     </footer>
 
@@ -157,7 +204,7 @@
             slideIndex++;
             if (slideIndex > slides.length) slideIndex = 1;
             slides[slideIndex - 1].style.display = "block";
-            setTimeout(showSlides, 4000);
+            setTimeout(showSlides, 5000);
         }
         showSlides();
     </script>
