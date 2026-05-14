@@ -8,41 +8,47 @@
         html { scroll-behavior: smooth; }
         body, html { margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; background: #121212; color: #e0e0e0; }
 
-        /* HEADER */
+        /* HEADER - USTALAMY STAŁĄ WYSOKOŚĆ DLA PRZYCISKÓW */
         header {
             position: absolute;
             top: 0;
             width: 100%;
             background: transparent;
             z-index: 1000;
-            padding: 20px 0; /* Odstęp od góry strony */
+            height: 100px; /* To sprawia, że pasek menu jest wąski */
         }
 
         .nav-container {
             display: flex;
-            align-items: center; /* Centruje elementy w pionie względem siebie */
+            align-items: center; 
             width: 95%;
             max-width: 1400px;
+            height: 100%;
             margin: 0 auto;
+            position: relative; /* Ważne dla pozycjonowania logo */
         }
 
-        /* LOGO - PO LEWEJ */
+        /* LOGO - KLUCZOWA ZMIANA */
         .logo {
-            flex-shrink: 0; /* Logo nie zmniejsza się */
+            position: absolute; /* Wyrywamy logo z układu paska */
+            left: 0;
+            top: 10px; /* Odstęp od samej góry */
+            z-index: 1001;
         }
 
         .logo img {
-            height: 250px; /* TU USTAWISZ WIELKOŚĆ HERBU */
+            height: 350px; /* TU MOŻESZ WPISAĆ NAWET 450px - menu nie drgnie */
             width: auto;
             display: block;
             filter: drop-shadow(0px 5px 15px rgba(0,0,0,0.7));
+            transition: 0.3s;
         }
 
-        /* NAWIGACJA - PUSH DO PRAWEJ */
+        /* NAWIGACJA */
         nav {
-            flex-grow: 1; /* Zajmuje całą wolną przestrzeń */
+            flex-grow: 1;
             display: flex;
-            justify-content: flex-end; /* Przesuwa listę menu na sam koniec (prawą stronę) */
+            justify-content: flex-end; /* Menu do prawej */
         }
 
         nav ul {
@@ -65,7 +71,6 @@
         }
         nav a:hover { color: #D4AF37; }
 
-        /* PRZYCISK WESPRZYJ */
         .btn-support {
             background: #b8860b !important;
             color: white !important;
@@ -101,20 +106,18 @@
 
         @keyframes fadeAnim { from { opacity: 0; } to { opacity: 1; } }
 
-        /* SEKCJA TREŚCI */
         .news-section { max-width: 1200px; margin: 80px auto; padding: 40px 20px; }
         .news-section h2 { text-align: center; color: #D4AF37; text-transform: uppercase; margin-bottom: 50px; font-size: 2.5rem; }
         .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         .news-card { background: #1e1e1e; border: 1px solid #333; border-radius: 5px; overflow: hidden; transition: 0.3s; }
-        .news-card:hover { border-color: #D4AF37; transform: translateY(-5px); }
         .news-card img { width: 100%; height: 200px; object-fit: cover; }
         .news-content { padding: 20px; }
 
-        /* MOBILE */
         @media (max-width: 1024px) {
-            .nav-container { flex-direction: column; gap: 20px; }
-            nav { justify-content: center; }
-            .logo img { height: 100px; }
+            .nav-container { flex-direction: column; }
+            nav { justify-content: center; margin-top: 20px; }
+            .logo { position: relative; display: flex; justify-content: center; width: 100%; }
+            .logo img { height: 120px; }
             .ksm-word { font-size: 3rem; }
         }
     </style>
@@ -157,11 +160,11 @@
         <h2>Aktualności</h2>
         <div class="news-grid">
             <div class="news-card">
-                <img src="https://ksmarchwarmia.wordpress.com/wp-content/uploads/2026/05/321.jpg">
-                <div class="news-content"><h3>Walny Zjazd KSM</h3><p>Relacja z obrad...</p></div>
+                <img src="2134.jpg">
+                <div class="news-content"><h3>Wspólne Uwielbienie</h3><p>KSM Redemptor serdecznie zaprasza na wielkie Uwielbienie</p></div>
             </div>
             <div class="news-card">
-                <img src="https://ksmarchwarmia.wordpress.com/wp-content/uploads/2026/05/5212.jpg">
+                <img src="5212.jpg">
                 <div class="news-content"><h3>Szkolenie Liderów</h3><p>Nowe kadry...</p></div>
             </div>
         </div>
