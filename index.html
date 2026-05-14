@@ -4,12 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KSM Archidiecezja Warmińska</title>
+
     <style>
-        html { scroll-behavior: smooth; }
-        /* Używamy rem, gdzie 1rem = 16px domyślnie */
-        body, html { margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; background: #121212; color: #e0e0e0; overflow-x: hidden; }
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #121212;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
 
         /* HEADER / MENU */
+
         header {
             position: absolute;
             top: 0;
@@ -22,14 +33,19 @@
 
         .nav-container {
             display: flex;
-            align-items: center; 
+            align-items: center;
             width: 95%;
-            max-width: 100rem; /* ok 1600px */
+            max-width: 100rem;
             margin: 0 auto;
-            padding: 0.5vh 0; 
+            padding: 0.5vh 0;
+
+            /* NOWE */
+            min-height: 6rem;
         }
 
-        nav { width: 100%; }
+        nav {
+            width: 100%;
+        }
 
         nav ul {
             list-style: none;
@@ -40,7 +56,8 @@
             width: 100%;
         }
 
-        /* LOGO - Uniwersalna wielkość */
+        /* LOGO */
+
         .logo-item {
             flex: 1;
             display: flex;
@@ -48,19 +65,27 @@
         }
 
         .logo-item img {
-            /* clamp(minimum, preferowane, maksimum) - logo samo rośnie/maleje */
-            height: clamp(5rem, 15vh, 10rem); 
-            width: auto;
+
+            /* NOWE RESPONSYWNE LOGO */
+            width: clamp(7rem, 12vw, 14rem);
+            height: auto;
+
+            display: block;
+            object-fit: contain;
+
             filter: drop-shadow(0 0.3rem 1rem rgba(0,0,0,0.6));
             transition: transform 0.3s ease;
-            padding: 0.5rem 0;
-        }
-        
-        .logo-item img:hover {
-            transform: scale(1.05);
+
+            /* OPCJONALNIE */
+            max-height: 8rem;
         }
 
-        /* Menu po prawej */
+        .logo-item img:hover {
+            transform: scale(1.08);
+        }
+
+        /* MENU */
+
         .menu-links {
             display: flex;
             gap: clamp(1rem, 2vw, 2rem);
@@ -77,7 +102,10 @@
             transition: 0.3s;
             white-space: nowrap;
         }
-        nav a:hover { color: #D4AF37; }
+
+        nav a:hover {
+            color: #D4AF37;
+        }
 
         .btn-support {
             background: #b8860b !important;
@@ -87,10 +115,30 @@
             box-shadow: 0 0.25rem 1rem rgba(0,0,0,0.3);
         }
 
-        /* SLIDER - 100vh to pełna wysokość ekranu */
-        .ksm-slider { position: relative; width: 100%; height: 100vh; overflow: hidden; background: #000; }
-        .ksm-slide { display: none; position: absolute; width: 100%; height: 100%; animation: fadeAnim 1.5s; }
-        .ksm-slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(35%); }
+        /* SLIDER */
+
+        .ksm-slider {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .ksm-slide {
+            display: none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            animation: fadeAnim 1.5s;
+        }
+
+        .ksm-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(35%);
+        }
 
         .ksm-overlay {
             position: absolute;
@@ -100,6 +148,7 @@
             text-align: center;
             width: 90%;
         }
+
         .ksm-word {
             font-size: clamp(2rem, 10vw, 8rem);
             font-weight: 900;
@@ -113,120 +162,256 @@
             margin: 0;
         }
 
-        @keyframes fadeAnim { from { opacity: 0; } to { opacity: 1; } }
-
-        /* SEKCJA AKTUALNOŚCI - Grid sam układa karty */
-        .news-section { max-width: 90rem; margin: 10vh auto; padding: 0 5%; }
-        .news-section h2 { text-align: center; color: #D4AF37; text-transform: uppercase; margin-bottom: 3rem; font-size: clamp(1.5rem, 4vw, 2.5rem); }
-        
-        .news-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); 
-            gap: 2rem; 
+        @keyframes fadeAnim {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
-        .news-card { 
-            background: #1e1e1e; 
-            border-radius: 1rem; 
-            overflow: hidden; 
+
+        /* AKTUALNOŚCI */
+
+        .news-section {
+            max-width: 90rem;
+            margin: 10vh auto;
+            padding: 0 5%;
+        }
+
+        .news-section h2 {
+            text-align: center;
+            color: #D4AF37;
+            text-transform: uppercase;
+            margin-bottom: 3rem;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+            gap: 2rem;
+        }
+
+        .news-card {
+            background: #1e1e1e;
+            border-radius: 1rem;
+            overflow: hidden;
             transition: 0.3s;
             border: 0.06rem solid #333;
         }
-        .news-card:hover { transform: translateY(-0.5rem); border-color: #D4AF37; }
-        .news-card img { width: 100%; height: 15rem; object-fit: cover; }
-        .news-content { padding: 1.5rem; }
-        .news-content h3 { color: #fff; margin-bottom: 0.8rem; font-size: 1.2rem; }
-        .news-content p { color: #ccc; font-size: 0.9rem; line-height: 1.6; }
 
-        /* RESPONSYWNOŚĆ - Mobile */
-        @media (max-width: 48rem) { /* ok 768px */
-            header { position: relative; background: #000; }
-            nav ul { flex-direction: column; padding: 1.5rem 0; }
-            .logo-item { flex: none; margin-bottom: 1rem; }
-            .menu-links { flex-wrap: wrap; justify-content: center; gap: 1rem; }
-            .ksm-slider { height: 50vh; }
+        .news-card:hover {
+            transform: translateY(-0.5rem);
+            border-color: #D4AF37;
         }
+
+        .news-card img {
+            width: 100%;
+            height: 15rem;
+            object-fit: cover;
+        }
+
+        .news-content {
+            padding: 1.5rem;
+        }
+
+        .news-content h3 {
+            color: #fff;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .news-content p {
+            color: #ccc;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 48rem) {
+
+            header {
+                position: relative;
+                background: #000;
+            }
+
+            nav ul {
+                flex-direction: column;
+                padding: 1.5rem 0;
+            }
+
+            .logo-item {
+                flex: none;
+                margin-bottom: 1rem;
+                justify-content: center;
+            }
+
+            /* NOWE */
+            .nav-container {
+                min-height: auto;
+            }
+
+            /* NOWE */
+            .logo-item img {
+                width: clamp(8rem, 35vw, 12rem);
+                max-height: none;
+            }
+
+            .menu-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .ksm-slider {
+                height: 50vh;
+            }
+        }
+
     </style>
 </head>
+
 <body>
 
-    <header>
-        <div class="nav-container">
-            <nav>
-                <ul>
-                    <li class="logo-item">
-                        <a href="#"><img src="KSM_Warmia_logo.png" alt="KSM"></a>
-                    </li>
-                    <div class="menu-links">
-                        <li><a href="#">Aktualności</a></li>
-                        <li><a href="#aktualnosci">Kalendarz</a></li>
-                        <li><a href="#">O nas</a></li>
-                        <li><a href="#">Kontakt</a></li>
-                        <li><a href="#">Do pobrania</a></li>
-                        <li><a href="#" class="btn-support">Wesprzyj</a></li>
-                    </div>
-                </ul>
-            </nav>
-        </div>
-    </header>
+<header>
+    <div class="nav-container">
+        <nav>
+            <ul>
 
-    <div class="ksm-slider">
-        <div class="ksm-slide" style="display: block;">
-            <img src="123.jpg">
-            <div class="ksm-overlay"><h1 class="ksm-word">BÓG</h1></div>
-        </div>
-        <div class="ksm-slide">
-            <img src="123456.jpg">
-            <div class="ksm-overlay"><h1 class="ksm-word">PATRIOTYZM</h1></div>
-        </div>
-        <div class="ksm-slide">
-            <img src="12345.jpg">
-            <div class="ksm-overlay"><h1 class="ksm-word">LUDZIE</h1></div>
+                <li class="logo-item">
+                    <a href="#">
+                        <img src="KSM_Warmia_logo.png" alt="KSM">
+                    </a>
+                </li>
+
+                <div class="menu-links">
+                    <li><a href="#">Aktualności</a></li>
+                    <li><a href="#aktualnosci">Kalendarz</a></li>
+                    <li><a href="#">O nas</a></li>
+                    <li><a href="#">Kontakt</a></li>
+                    <li><a href="#">Do pobrania</a></li>
+                    <li><a href="#" class="btn-support">Wesprzyj</a></li>
+                </div>
+
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="ksm-slider">
+
+    <div class="ksm-slide" style="display: block;">
+        <img src="123.jpg">
+        <div class="ksm-overlay">
+            <h1 class="ksm-word">BÓG</h1>
         </div>
     </div>
 
-    <section class="news-section" id="aktualnosci">
-        <h2>Ostatnie wydarzenia</h2>
-        <div class="news-grid">
-            <div class="news-card">
-                <img src="2134.jpg" alt="Wydarzenie 1">
-                <div class="news-content">
-                    <h3>Wspólne Uwielbienie</h3>
-                    <p>Relacja z modlitwy KSM Redemptor. Piękny czas budowania wspólnoty.</p>
-                </div>
-            </div>
-            <div class="news-card">
-                <img src="5212.jpg" alt="Wydarzenie 2">
-                <div class="news-content">
-                    <h3>Szkolenie Liderów</h3>
-                    <p>Nowe kadry gotowe do działania! Intensywny weekend warsztatów.</p>
-                </div>
-            </div>
-            <div class="news-card">
-                <img src="12345.jpg" alt="Wydarzenie 3">
-                <div class="news-content">
-                    <h3>Akcja Rejestracja</h3>
-                    <p>Dowiedz się jak dołączyć do naszych oddziałów w całej diecezji.</p>
-                </div>
+    <div class="ksm-slide">
+        <img src="123456.jpg">
+        <div class="ksm-overlay">
+            <h1 class="ksm-word">PATRIOTYZM</h1>
+        </div>
+    </div>
+
+    <div class="ksm-slide">
+        <img src="12345.jpg">
+        <div class="ksm-overlay">
+            <h1 class="ksm-word">LUDZIE</h1>
+        </div>
+    </div>
+
+</div>
+
+<section class="news-section" id="aktualnosci">
+
+    <h2>Ostatnie wydarzenia</h2>
+
+    <div class="news-grid">
+
+        <div class="news-card">
+            <img src="2134.jpg" alt="Wydarzenie 1">
+
+            <div class="news-content">
+                <h3>Wspólne Uwielbienie</h3>
+
+                <p>
+                    Relacja z modlitwy KSM Redemptor.
+                    Piękny czas budowania wspólnoty.
+                </p>
             </div>
         </div>
-    </section>
 
-    <footer style="text-align: center; padding: 3rem; color: #777; font-size: 0.8rem; border-top: 0.06rem solid #222;">
-        &copy; 2024 Katolickie Stowarzyszenie Młodzieży Archidiecezji Warmińskiej
-    </footer>
+        <div class="news-card">
+            <img src="5212.jpg" alt="Wydarzenie 2">
 
-    <script>
-        let slideIndex = 0;
-        const slides = document.getElementsByClassName("ksm-slide");
-        function showSlides() {
-            for (let i = 0; i < slides.length; i++) { slides[i].style.display = "none"; }
-            slideIndex++;
-            if (slideIndex > slides.length) {slideIndex = 1}
-            slides[slideIndex-1].style.display = "block";
-            setTimeout(showSlides, 5000);
+            <div class="news-content">
+                <h3>Szkolenie Liderów</h3>
+
+                <p>
+                    Nowe kadry gotowe do działania!
+                    Intensywny weekend warsztatów.
+                </p>
+            </div>
+        </div>
+
+        <div class="news-card">
+            <img src="12345.jpg" alt="Wydarzenie 3">
+
+            <div class="news-content">
+                <h3>Akcja Rejestracja</h3>
+
+                <p>
+                    Dowiedz się jak dołączyć do naszych oddziałów
+                    w całej diecezji.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<footer style="
+    text-align: center;
+    padding: 3rem;
+    color: #777;
+    font-size: 0.8rem;
+    border-top: 0.06rem solid #222;
+">
+
+    &copy; 2024 Katolickie Stowarzyszenie Młodzieży
+    Archidiecezji Warmińskiej
+
+</footer>
+
+<script>
+
+    let slideIndex = 0;
+
+    const slides = document.getElementsByClassName("ksm-slide");
+
+    function showSlides() {
+
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
         }
-        showSlides();
-    </script>
+
+        slideIndex++;
+
+        if (slideIndex > slides.length) {
+            slideIndex = 1;
+        }
+
+        slides[slideIndex - 1].style.display = "block";
+
+        setTimeout(showSlides, 5000);
+    }
+
+    showSlides();
+
+</script>
 
 </body>
 </html>
