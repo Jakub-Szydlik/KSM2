@@ -38,8 +38,6 @@
             max-width: 100rem;
             margin: 0 auto;
             padding: 0.5vh 0;
-
-            /* NOWE */
             min-height: 6rem;
         }
 
@@ -65,18 +63,12 @@
         }
 
         .logo-item img {
-
-            /* NOWE RESPONSYWNE LOGO */
             width: clamp(10rem, 20vw, 25rem);
             height: auto;
-
             display: block;
             object-fit: contain;
-
             filter: drop-shadow(0 0.3rem 1rem rgba(0,0,0,0.6));
             transition: transform 0.3s ease;
-
-            /* OPCJONALNIE */
             max-height: 8rem;
         }
 
@@ -163,15 +155,11 @@
         }
 
         @keyframes fadeAnim {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        /* AKTUALNOŚCI */
+        /* AKTUALNOŚCI - POPRAWIONE POD PLAKATY */
 
         .news-section {
             max-width: 90rem;
@@ -199,6 +187,8 @@
             overflow: hidden;
             transition: 0.3s;
             border: 0.06rem solid #333;
+            display: flex;
+            flex-direction: column;
         }
 
         .news-card:hover {
@@ -208,13 +198,17 @@
 
         .news-card img {
             width: 100%;
-            height: 20rem;
-            width: 10rem;
-            object-fit: cover;
+            height: auto; /* Pozwala zdjęciu zachować proporcje plakatu */
+            max-height: 40rem; /* Zapobiega zbyt długim kartom na pionowe plakaty */
+            display: block;
+            object-fit: contain; /* Gwarantuje, że cały obraz będzie widoczny */
+            background: #000; /* Czarne tło, jeśli plakat nie wypełnia całej szerokości */
         }
 
         .news-content {
             padding: 1.5rem;
+            background: #1e1e1e;
+            flex-grow: 1;
         }
 
         .news-content h3 {
@@ -232,7 +226,6 @@
         /* MOBILE */
 
         @media (max-width: 48rem) {
-
             header {
                 position: relative;
                 background: #000;
@@ -249,12 +242,10 @@
                 justify-content: center;
             }
 
-            /* NOWE */
             .nav-container {
                 min-height: auto;
             }
 
-            /* NOWE */
             .logo-item img {
                 width: clamp(8rem, 35vw, 12rem);
                 max-height: none;
@@ -280,13 +271,11 @@
     <div class="nav-container">
         <nav>
             <ul>
-
                 <li class="logo-item">
                     <a href="#">
                         <img src="KSM_Warmia_logo.png" alt="KSM">
                     </a>
                 </li>
-
                 <div class="menu-links">
                     <li><a href="#">Aktualności</a></li>
                     <li><a href="#aktualnosci">Kalendarz</a></li>
@@ -295,14 +284,12 @@
                     <li><a href="#">Do pobrania</a></li>
                     <li><a href="#" class="btn-support">Wesprzyj</a></li>
                 </div>
-
             </ul>
         </nav>
     </div>
 </header>
 
 <div class="ksm-slider">
-
     <div class="ksm-slide" style="display: block;">
         <img src="123.jpg">
         <div class="ksm-overlay">
@@ -323,95 +310,57 @@
             <h1 class="ksm-word">LUDZIE</h1>
         </div>
     </div>
-
 </div>
 
 <section class="news-section" id="aktualnosci">
-
     <h2>Ostatnie wydarzenia</h2>
-
     <div class="news-grid">
-
         <div class="news-card">
             <img src="2134.jpg" alt="Wydarzenie 1">
-
             <div class="news-content">
                 <h3>Wspólne Uwielbienie</h3>
-
-                <p>
-                    Relacja z modlitwy KSM Redemptor.
-                    Piękny czas budowania wspólnoty.
-                </p>
+                <p>Relacja z modlitwy KSM Redemptor. Piękny czas budowania wspólnoty.</p>
             </div>
         </div>
 
         <div class="news-card">
             <img src="5212.jpg" alt="Wydarzenie 2">
-
             <div class="news-content">
                 <h3>Szkolenie Liderów</h3>
-
-                <p>
-                    Nowe kadry gotowe do działania!
-                    Intensywny weekend warsztatów.
-                </p>
+                <p>Nowe kadry gotowe do działania! Intensywny weekend warsztatów.</p>
             </div>
         </div>
 
         <div class="news-card">
             <img src="12345.jpg" alt="Wydarzenie 3">
-
             <div class="news-content">
                 <h3>Akcja Rejestracja</h3>
-
-                <p>
-                    Dowiedz się jak dołączyć do naszych oddziałów
-                    w całej diecezji.
-                </p>
+                <p>Dowiedz się jak dołączyć do naszych oddziałów w całej diecezji.</p>
             </div>
         </div>
-
     </div>
 </section>
 
-<footer style="
-    text-align: center;
-    padding: 3rem;
-    color: #777;
-    font-size: 0.8rem;
-    border-top: 0.06rem solid #222;
-">
-
-    &copy; 2026 Katolickie Stowarzyszenie Młodzieży
-    Archidiecezji Warmińskiej
-
+<footer style="text-align: center; padding: 3rem; color: #777; font-size: 0.8rem; border-top: 0.06rem solid #222;">
+    &copy; 2026 Katolickie Stowarzyszenie Młodzieży Archidiecezji Warmińskiej
 </footer>
 
 <script>
-
     let slideIndex = 0;
-
     const slides = document.getElementsByClassName("ksm-slide");
 
     function showSlides() {
-
         for (let i = 0; i < slides.length; i++) {
             slides[i].style.display = "none";
         }
-
         slideIndex++;
-
         if (slideIndex > slides.length) {
             slideIndex = 1;
         }
-
         slides[slideIndex - 1].style.display = "block";
-
         setTimeout(showSlides, 5000);
     }
-
     showSlides();
-
 </script>
 
 </body>
