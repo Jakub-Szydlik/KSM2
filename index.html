@@ -25,7 +25,7 @@
             width: 95%;
             max-width: 1600px;
             margin: 0 auto;
-            padding: 10px 0;
+            padding: 5px 0; /* Zmniejszyłem padding kontenera, by logo mogło samo dyktować wysokość */
         }
 
         nav { width: 100%; }
@@ -39,24 +39,30 @@
             width: 100%;
         }
 
-        /* Styl dla LI z logo - wypycha resztę menu na prawo */
+        /* LOGO - Teraz będzie duże */
         .logo-item {
-            flex: 1; /* To zajmuje całą wolną przestrzeń po lewej */
+            flex: 1;
             display: flex;
             align-items: center;
         }
 
         .logo-item img {
-            height: clamp(80px, 12vw, 150px); /* Logo jest duże i czytelne */
+            /* Zwiększona wysokość logo */
+            height: 160px; 
             width: auto;
-            filter: drop-shadow(0px 5px 15px rgba(0,0,0,0.5));
-            transition: 0.3s;
+            filter: drop-shadow(0px 5px 15px rgba(0,0,0,0.6));
+            transition: transform 0.3s ease;
+            margin-top: 10px; /* Lekkie przesunięcie w dół, by "wchodziło" na slider */
+        }
+        
+        .logo-item img:hover {
+            transform: scale(1.05);
         }
 
-        /* Styl dla linków menu */
+        /* Menu po prawej */
         .menu-links {
             display: flex;
-            gap: 20px;
+            gap: 25px;
             align-items: center;
         }
 
@@ -64,7 +70,7 @@
             text-decoration: none;
             color: #ffffff;
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: 0.3s;
@@ -74,12 +80,13 @@
 
         .btn-support {
             background: #b8860b !important;
-            padding: 10px 20px !important;
+            padding: 12px 25px !important;
             border-radius: 4px;
             color: white !important;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
-        /* SLIDER - Idealne centrowanie */
+        /* SLIDER */
         .ksm-slider { position: relative; width: 100%; height: 100vh; overflow: hidden; background: #000; }
         .ksm-slide { display: none; position: absolute; width: 100%; height: 100%; animation: fadeAnim 1.5s; }
         .ksm-slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(35%); }
@@ -88,7 +95,7 @@
             position: absolute;
             top: 55%;
             left: 50%;
-            transform: translate(-50%, -50%); /* Gwarancja braku uciętego tekstu */
+            transform: translate(-50%, -50%);
             text-align: center;
             width: 90%;
         }
@@ -126,19 +133,21 @@
         .news-card:hover { transform: translateY(-10px); border-color: #D4AF37; }
         .news-card img { width: 100%; height: 250px; object-fit: cover; }
         .news-content { padding: 25px; }
+        .news-content h3 { color: #fff; margin-bottom: 10px; }
+        .news-content p { color: #ccc; font-size: 0.95rem; line-height: 1.5; }
 
         /* RESPONSYWNOŚĆ */
         @media (max-width: 1024px) {
-            .nav-container { padding: 10px; }
-            .menu-links { gap: 10px; }
-            nav a { font-size: 0.75rem; }
+            .logo-item img { height: 120px; }
+            .menu-links { gap: 15px; }
+            nav a { font-size: 0.8rem; }
         }
 
         @media (max-width: 768px) {
             header { position: relative; background: #000; }
-            nav ul { flex-direction: column; gap: 20px; }
-            .logo-item { flex: none; margin-bottom: 10px; }
-            .menu-links { flex-wrap: wrap; justify-content: center; }
+            nav ul { flex-direction: column; padding: 20px 0; }
+            .logo-item { flex: none; margin-bottom: 20px; }
+            .menu-links { flex-wrap: wrap; justify-content: center; gap: 15px; }
             .ksm-slider { height: 60vh; }
             .ksm-word { font-size: 2.8rem; }
         }
