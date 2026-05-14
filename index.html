@@ -6,40 +6,39 @@
     <title>KSM Archidiecezja Warmińska</title>
     <style>
         html { scroll-behavior: smooth; }
-        body, html { margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; background: #121212; color: #e0e0e0; }
+        body, html { margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; background: #121212; color: #e0e0e0; overflow-x: hidden; }
 
-        /* HEADER - USTALAMY STAŁĄ WYSOKOŚĆ DLA PRZYCISKÓW */
+        /* HEADER */
         header {
             position: absolute;
             top: 0;
             width: 100%;
             background: transparent;
             z-index: 1000;
-            height: 100px; /* To sprawia, że pasek menu jest wąski */
+            min-height: 80px;
         }
 
         .nav-container {
             display: flex;
             align-items: center; 
-            width: 95%;
-            max-width: 1400px;
-            height: 100%;
+            width: 90%;
+            max-width: 1600px;
             margin: 0 auto;
-            position: relative; /* Ważne dla pozycjonowania logo */
+            padding: 10px 0;
+            position: relative;
         }
 
-        /* LOGO - KLUCZOWA ZMIANA */
+        /* LOGO - Responsywne */
         .logo {
-            position: absolute; /* Wyrywamy logo z układu paska */
+            position: absolute;
             left: 0;
-            top: 10px; /* Odstęp od samej góry */
+            top: 10px;
             z-index: 1001;
         }
 
         .logo img {
-            height: 350px; /* TU MOŻESZ WPISAĆ NAWET 450px - menu nie drgnie */
+            height: clamp(100px, 20vw, 350px); /* Elastyczna wysokość: min 100px, max 350px */
             width: auto;
-            display: block;
             filter: drop-shadow(0px 5px 15px rgba(0,0,0,0.7));
             transition: 0.3s;
         }
@@ -48,13 +47,13 @@
         nav {
             flex-grow: 1;
             display: flex;
-            justify-content: flex-end; /* Menu do prawej */
+            justify-content: flex-end;
         }
 
         nav ul {
             list-style: none;
             display: flex;
-            gap: 30px;
+            gap: clamp(10px, 2vw, 30px); /* Mniejsze odstępy na mniejszych ekranach */
             margin: 0;
             padding: 0;
             align-items: center;
@@ -64,78 +63,93 @@
             text-decoration: none;
             color: #ffffff;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: clamp(0.7rem, 1vw, 0.9rem); /* Tekst dopasowuje się do ekranu */
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: 0.3s;
+            white-space: nowrap;
         }
         nav a:hover { color: #D4AF37; }
 
         .btn-support {
             background: #b8860b !important;
             color: white !important;
-            padding: 10px 22px !important;
+            padding: 8px 18px !important;
             border-radius: 3px;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.4);
         }
 
-        /* SLIDER */
+        /* SLIDER - Elastyczny dla TV i Telefonu */
         .ksm-slider { position: relative; width: 100%; height: 100vh; overflow: hidden; background: #000; }
         .ksm-slide { display: none; position: absolute; width: 100%; height: 100%; animation: fadeAnim 1.5s; }
         .ksm-slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(35%); }
 
         .ksm-overlay {
             position: absolute;
-            top: 60%;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
-            width: 100%;
+            width: 90%;
         }
         .ksm-word {
-            font-size: 6rem;
+            font-size: clamp(2.5rem, 10vw, 7rem); /* Gigantyczny na TV, czytelny na telefonie */
             font-weight: 900;
-            letter-spacing: 10px;
+            letter-spacing: clamp(5px, 2vw, 15px);
             color: white;
-            margin: 0;
             text-transform: uppercase;
             border-bottom: 4px solid #D4AF37;
             display: inline-block;
-            padding-bottom: 5px;
+            padding-bottom: 10px;
+            text-shadow: 0 0 30px rgba(0,0,0,0.5);
         }
 
         @keyframes fadeAnim { from { opacity: 0; } to { opacity: 1; } }
 
-        .news-section { max-width: 1200px; margin: 80px auto; padding: 40px 20px; }
-        .news-section h2 { text-align: center; color: #D4AF37; text-transform: uppercase; margin-bottom: 50px; font-size: 2.5rem; }
-        .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .news-card { background: #1e1e1e; border: 1px solid #333; border-radius: 5px; overflow: hidden; transition: 0.3s; }
+        /* SEKCJA NEWSÓW - Grid dopasowujący się */
+        .news-section { max-width: 1400px; margin: 40px auto; padding: 40px 20px; }
+        .news-section h2 { text-align: center; color: #D4AF37; text-transform: uppercase; margin-bottom: 40px; font-size: clamp(1.5rem, 4vw, 2.5rem); }
+        .news-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 20px; 
+        }
+        .news-card { background: #1e1e1e; border: 1px solid #333; border-radius: 8px; overflow: hidden; }
         .news-card img { width: 100%; height: 200px; object-fit: cover; }
         .news-content { padding: 20px; }
 
-        @media (max-width: 1024px) {
-            .nav-container { flex-direction: column; }
-            nav { justify-content: center; margin-top: 20px; }
-            .logo { position: relative; display: flex; justify-content: center; width: 100%; }
-            .logo img { height: 120px; }
-            .ksm-word { font-size: 3rem; }
+        /* MEDIA QUERIES - MAGIA DLA TELEFONU */
+        @media (max-width: 768px) {
+            header { position: relative; background: #000; } /* Na telefonie czarny pasek ułatwia czytanie */
+            .nav-container { flex-direction: column; height: auto; }
+            .logo { position: relative; top: 0; left: 0; text-align: center; margin-bottom: 10px; }
+            .logo img { height: 120px; margin: 0 auto; }
+            nav { width: 100%; justify-content: center; }
+            nav ul { flex-wrap: wrap; justify-content: center; gap: 15px; }
+            .ksm-slider { height: 60vh; } /* Krótszy slider na telefonie */
+            .ksm-word { border-bottom-width: 2px; }
+        }
+
+        /* Dla bardzo dużych ekranów (TV) */
+        @media (min-width: 2000px) {
+            .nav-container { max-width: 1800px; }
+            .ksm-word { font-size: 10rem; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">
+        <div class="nav-container">
+            <div class="logo">
                 <img src="KSM_Warmia_logo.png" alt="KSM">
             </div>
-        <div class="nav-container">
             <nav>
                 <ul>
                     <li><a href="#">Główna</a></li>
                     <li><a href="#aktualnosci">Aktualności</a></li>
                     <li><a href="#">O nas</a></li>
                     <li><a href="#">Kontakt</a></li>
-                    <li><a href="#" class="btn-support">Wesprzyj Nas</a></li>
+                    <li><a href="#" class="btn-support">Wesprzyj</a></li>
                 </ul>
             </nav>
         </div>
@@ -157,15 +171,15 @@
     </div>
 
     <section class="news-section" id="aktualnosci">
-        <h2>Aktualności</h2>
+        <h2>Ostatnie wydarzenia</h2>
         <div class="news-grid">
             <div class="news-card">
                 <img src="2134.jpg">
-                <div class="news-content"><h3>Wspólne Uwielbienie</h3><p>KSM Redemptor serdecznie zaprasza na wielkie Uwielbienie</p></div>
+                <div class="news-content"><h3>Wspólne Uwielbienie</h3><p>Relacja z modlitwy KSM Redemptor.</p></div>
             </div>
             <div class="news-card">
                 <img src="5212.jpg">
-                <div class="news-content"><h3>Szkolenie Liderów</h3><p>Nowe kadry...</p></div>
+                <div class="news-content"><h3>Szkolenie Liderów</h3><p>Nowe kadry gotowe do działania.</p></div>
             </div>
         </div>
     </section>
