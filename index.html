@@ -8,62 +8,47 @@
         html { scroll-behavior: smooth; }
         body, html { margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; background: #121212; color: #e0e0e0; overflow-x: hidden; }
 
-        /* HEADER */
+        /* HEADER - Poprawiony układ */
         header {
             position: absolute;
             top: 0;
             width: 100%;
-            background: transparent;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
             z-index: 1000;
-            min-height: 80px;
         }
 
         .nav-container {
             display: flex;
+            justify-content: space-between; /* Rozpycha logo i nawigację na boki */
             align-items: center; 
-            width: 90%;
+            width: 95%;
             max-width: 1600px;
             margin: 0 auto;
             padding: 10px 0;
-            position: relative;
         }
 
-        /* LOGO - Responsywne */
-        .logo {
-            position: absolute;
-            left: 0;
-            top: 10px;
-            z-index: 1001;
-        }
-
+        /* LOGO - Skaluje się lepiej */
         .logo img {
-            height: clamp(100px, 20vw, 350px); /* Elastyczna wysokość: min 100px, max 350px */
+            height: clamp(60px, 10vw, 120px); /* Zmniejszyłem bazową wysokość dla laptopów */
             width: auto;
             filter: drop-shadow(0px 5px 15px rgba(0,0,0,0.7));
             transition: 0.3s;
         }
 
         /* NAWIGACJA */
-        nav {
-            flex-grow: 1;
-            display: flex;
-            justify-content: flex-end;
-        }
-
         nav ul {
             list-style: none;
             display: flex;
-            gap: clamp(10px, 2vw, 30px); /* Mniejsze odstępy na mniejszych ekranach */
+            gap: clamp(10px, 1.5vw, 25px);
             margin: 0;
             padding: 0;
-            align-items: center;
         }
 
         nav a {
             text-decoration: none;
             color: #ffffff;
             font-weight: 700;
-            font-size: clamp(0.7rem, 1vw, 0.9rem); /* Tekst dopasowuje się do ekranu */
+            font-size: clamp(0.7rem, 0.9vw, 0.85rem);
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: 0.3s;
@@ -73,75 +58,65 @@
 
         .btn-support {
             background: #b8860b !important;
-            color: white !important;
-            padding: 8px 18px !important;
+            padding: 8px 15px !important;
             border-radius: 3px;
         }
 
-        /* SLIDER - Elastyczny dla TV i Telefonu */
+        /* SLIDER - Poprawione centrowanie napisów */
         .ksm-slider { position: relative; width: 100%; height: 100vh; overflow: hidden; background: #000; }
         .ksm-slide { display: none; position: absolute; width: 100%; height: 100%; animation: fadeAnim 1.5s; }
-        .ksm-slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(35%); }
+        .ksm-slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(40%); }
 
         .ksm-overlay {
             position: absolute;
-            top: 50%;
+            top: 55%; /* Obniżone nieco pod logo */
             left: 50%;
+            transform: translate(-50%, -50%); /* To klucz do idealnego środka */
             text-align: center;
             width: 90%;
+            pointer-events: none;
         }
         .ksm-word {
-            font-size: clamp(2.5rem, 10vw, 7rem); /* Gigantyczny na TV, czytelny na telefonie */
+            font-size: clamp(2rem, 8vw, 6rem);
             font-weight: 900;
-            letter-spacing: clamp(5px, 2vw, 15px);
+            letter-spacing: clamp(4px, 1.5vw, 12px);
             color: white;
             text-transform: uppercase;
             border-bottom: 4px solid #D4AF37;
             display: inline-block;
             padding-bottom: 10px;
-            text-shadow: 0 0 30px rgba(0,0,0,0.5);
+            text-shadow: 2px 2px 20px rgba(0,0,0,1);
+            margin: 0;
         }
 
         @keyframes fadeAnim { from { opacity: 0; } to { opacity: 1; } }
 
-        /* SEKCJA NEWSÓW - Grid dopasowujący się */
+        /* SEKCJA NEWSÓW */
         .news-section { max-width: 1400px; margin: 40px auto; padding: 40px 20px; }
-        .news-section h2 { text-align: center; color: #D4AF37; text-transform: uppercase; margin-bottom: 40px; font-size: clamp(1.5rem, 4vw, 2.5rem); }
         .news-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
             gap: 20px; 
         }
-        .news-card { background: #1e1e1e; border: 1px solid #333; border-radius: 8px; overflow: hidden; }
+        .news-card { background: #1e1e1e; border-radius: 8px; overflow: hidden; }
         .news-card img { width: 100%; height: 200px; object-fit: cover; }
-        .news-content { padding: 20px; }
 
-        /* MEDIA QUERIES - MAGIA DLA TELEFONU */
+        /* RWD DLA SMARTFONA */
         @media (max-width: 768px) {
-            header { position: relative; background: #000; } /* Na telefonie czarny pasek ułatwia czytanie */
-            .nav-container { flex-direction: column; height: auto; }
-            .logo { position: relative; top: 0; left: 0; text-align: center; margin-bottom: 10px; }
-            .logo img { height: 120px; margin: 0 auto; }
-            nav { width: 100%; justify-content: center; }
-            nav ul { flex-wrap: wrap; justify-content: center; gap: 15px; }
-            .ksm-slider { height: 60vh; } /* Krótszy slider na telefonie */
-            .ksm-word { border-bottom-width: 2px; }
-        }
-
-        /* Dla bardzo dużych ekranów (TV) */
-        @media (min-width: 2000px) {
-            .nav-container { max-width: 1800px; }
-            .ksm-word { font-size: 10rem; }
+            .nav-container { flex-direction: column; gap: 15px; }
+            nav ul { flex-wrap: wrap; justify-content: center; }
+            .ksm-slider { height: 70vh; }
+            .ksm-word { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">
-                <img src="KSM_Warmia_logo.png" alt="KSM">
-        </div>
         <div class="nav-container">
+            <div class="logo">
+                <img src="KSM_Warmia_logo.png" alt="KSM">
+            </div>
             <nav>
                 <ul>
                     <li><a href="#">Aktualności</a></li>
@@ -171,7 +146,6 @@
     </div>
 
     <section class="news-section" id="aktualnosci">
-        <h2>Ostatnie wydarzenia</h2>
         <div class="news-grid">
             <div class="news-card">
                 <img src="2134.jpg">
