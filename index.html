@@ -8,40 +8,37 @@
         html { scroll-behavior: smooth; }
         body, html { margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; background: #121212; color: #e0e0e0; overflow-x: hidden; }
 
-        /* LOGO - Teraz jest duże i niezależne */
+        /* DUŻE LOGO - Poza strukturą header, żeby mogło być wielkie */
         .main-logo {
             position: absolute;
             top: 20px;
             left: 5%;
-            z-index: 1100; /* Powyżej wszystkiego */
+            z-index: 1100;
         }
-
         .main-logo img {
-            height: clamp(100px, 15vw, 220px); /* Na laptopie około 180-200px, na TV do 220px */
+            height: clamp(100px, 15vw, 220px);
             width: auto;
             filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.8));
         }
 
-        /* HEADER / MENU - Osobny pasek dla czytelności */
+        /* HEADER / MENU */
         header {
             position: absolute;
             top: 0;
             width: 100%;
-            background: rgba(0, 0, 0, 0.4); /* Półprzezroczyste tło pod menu */
-            backdrop-filter: blur(5px); /* Efekt oszronionego szkła */
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
             z-index: 1000;
         }
-
         .nav-container {
             display: flex;
-            justify-content: flex-end; /* Menu do prawej */
+            justify-content: flex-end;
             align-items: center; 
             width: 90%;
             max-width: 1600px;
             margin: 0 auto;
-            height: 70px; /* Stała wysokość paska menu */
+            height: 80px;
         }
-
         nav ul {
             list-style: none;
             display: flex;
@@ -49,7 +46,6 @@
             margin: 0;
             padding: 0;
         }
-
         nav a {
             text-decoration: none;
             color: #ffffff;
@@ -60,26 +56,24 @@
             transition: 0.3s;
         }
         nav a:hover { color: #D4AF37; }
-
         .btn-support {
             background: #b8860b !important;
             padding: 10px 20px !important;
             border-radius: 3px;
         }
 
-        /* SLIDER */
+        /* SLIDER - Poprawione centrowanie napisu PATRIOTYZM */
         .ksm-slider { position: relative; width: 100%; height: 100vh; overflow: hidden; background: #000; }
         .ksm-slide { display: none; position: absolute; width: 100%; height: 100%; animation: fadeAnim 1.5s; }
         .ksm-slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(35%); }
 
-        /* CENTROWANIE NAPISÓW */
         .ksm-overlay {
             position: absolute;
-            top: 60%; /* Przesunięte w dół, żeby nie biło się z logo */
+            top: 55%; /* Środek lekko obniżony przez logo */
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); /* Gwarantuje, że napis nie wyjdzie poza prawą krawędź */
             text-align: center;
-            width: 100%;
+            width: 95%;
         }
         .ksm-word {
             font-size: clamp(2.5rem, 8vw, 7rem);
@@ -91,34 +85,64 @@
             display: inline-block;
             padding-bottom: 10px;
             text-shadow: 0 0 40px rgba(0,0,0,0.8);
+            margin: 0;
         }
 
         @keyframes fadeAnim { from { opacity: 0; } to { opacity: 1; } }
 
-        /* RWD - TELEFON */
+        /* SEKCJA AKTUALNOŚCI - Przywrócona i dopracowana */
+        .news-section { 
+            max-width: 1400px; 
+            margin: 60px auto; 
+            padding: 0 20px; 
+        }
+        .news-section h2 { 
+            text-align: center; 
+            color: #D4AF37; 
+            text-transform: uppercase; 
+            margin-bottom: 40px; 
+            font-size: 2rem;
+            letter-spacing: 2px;
+        }
+        .news-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 30px; 
+        }
+        .news-card { 
+            background: #1e1e1e; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            transition: transform 0.3s ease;
+            border: 1px solid #333;
+        }
+        .news-card:hover { transform: translateY(-10px); }
+        .news-card img { width: 100%; height: 220px; object-fit: cover; }
+        .news-content { padding: 25px; }
+        .news-content h3 { margin: 0 0 10px 0; color: #fff; font-size: 1.4rem; }
+        .news-content p { color: #aaa; line-height: 1.6; margin: 0; }
+
+        /* RESPONSYWNOŚĆ */
         @media (max-width: 768px) {
-            .main-logo { width: 100%; left: 0; text-align: center; top: 80px; }
-            .main-logo img { height: 120px; }
-            
+            .main-logo { width: 100%; left: 0; text-align: center; top: 90px; }
+            .main-logo img { height: 110px; }
             header { position: relative; background: #000; }
             .nav-container { justify-content: center; height: auto; padding: 15px 0; }
             nav ul { flex-wrap: wrap; justify-content: center; gap: 10px; }
-            
-            .ksm-slider { height: 65vh; }
-            .ksm-overlay { top: 70%; }
-            .ksm-word { font-size: 2.2rem; }
+            .ksm-slider { height: 60vh; }
+            .ksm-word { font-size: 2.5rem; letter-spacing: 5px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Logo wyciągnięte przed Header, żeby mogło być duże -->
+    <!-- Logo jako niezależny element -->
+    <div class="main-logo">
+        <img src="KSM_Warmia_logo.png" alt="KSM">
+    </div>
 
     <header>
         <div class="nav-container">
-            <div class="main-logo">
-                <img src="KSM_Warmia_logo.png" alt="KSM">
-            </div>
             <nav>
                 <ul>
                     <li><a href="#">Aktualności</a></li>
@@ -147,20 +171,48 @@
         </div>
     </div>
 
-    <!-- Reszta sekcji bez zmian -->
-    <section class="news-section" id="aktualnosci" style="padding: 50px 20px; text-align: center;">
-        <h2 style="color: #D4AF37; text-transform: uppercase;">Ostatnie wydarzenia</h2>
-        <!-- Tutaj Grid z poprzedniego kodu -->
+    <!-- Przywrócona sekcja aktualności -->
+    <section class="news-section" id="aktualnosci">
+        <h2>Ostatnie wydarzenia</h2>
+        <div class="news-grid">
+            <div class="news-card">
+                <img src="2134.jpg" alt="Wydarzenie 1">
+                <div class="news-content">
+                    <h3>Wspólne Uwielbienie</h3>
+                    <p>Relacja z modlitwy KSM Redemptor. Piękny czas spędzony na budowaniu wspólnoty i modlitwie.</p>
+                </div>
+            </div>
+            <div class="news-card">
+                <img src="5212.jpg" alt="Wydarzenie 2">
+                <div class="news-content">
+                    <h3>Szkolenie Liderów</h3>
+                    <p>Nowe kadry gotowe do działania! Intensywny weekend pełen warsztatów i planowania przyszłości.</p>
+                </div>
+            </div>
+            <div class="news-card">
+                <img src="12345.jpg" alt="Wydarzenie 3">
+                <div class="news-content">
+                    <h3>Akcja Rejestracja</h3>
+                    <p>Dowiedz się jak dołączyć do naszych oddziałów w całej diecezji. Czekamy właśnie na Ciebie!</p>
+                </div>
+            </div>
+        </div>
     </section>
+
+    <footer style="text-align: center; padding: 40px; color: #555; font-size: 0.9rem;">
+        &copy; 2024 KSM Archidiecezja Warmińska
+    </footer>
 
     <script>
         let slideIndex = 0;
         const slides = document.getElementsByClassName("ksm-slide");
         function showSlides() {
-            for (let i = 0; i < slides.length; i++) slides[i].style.display = "none";
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
             slideIndex++;
-            if (slideIndex > slides.length) slideIndex = 1;
-            slides[slideIndex - 1].style.display = "block";
+            if (slideIndex > slides.length) {slideIndex = 1}
+            slides[slideIndex-1].style.display = "block";
             setTimeout(showSlides, 5000);
         }
         showSlides();
